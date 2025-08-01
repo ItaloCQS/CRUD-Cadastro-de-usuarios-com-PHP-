@@ -11,6 +11,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   </head>
   <body>
+  <?php
+    include("navbar.php")
+  ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -29,6 +32,18 @@
                                 if(mysqli_num_rows($query) > 0){
                                     foreach($query as $usuario):
                         ?>
+
+                        <?php
+                            $usuario_id = $usuario['id'];
+                            $sqlFoto = "SELECT file_name FROM files WHERE usuario = '$usuario_id' ORDER BY id DESC LIMIT 1";
+                            $queryFoto = mysqli_query($conn, $sqlFoto);
+
+                            $foto = null;
+                            if ($queryFoto && mysqli_num_rows($queryFoto) > 0) {
+                                $foto = mysqli_fetch_assoc($queryFoto);
+                            }
+                        ?>
+
                         <div class="input-group mb-3">
                             <p class="input-group-text fw-bold">Nome</p>
                             <p class="form-control"><?= $usuario['nome'] ?></p>
@@ -41,6 +56,15 @@
                             <p class="input-group-text fw-bold">Data de Nascimento</p>
                             <p class="form-control"><?= $usuario['data_nascimento'] ?></p>
                         </div>
+
+                        <div class="card mx-auto" style="width: 18rem;">
+                            <?php if ($foto && !empty($foto['file_name'])): ?>
+                                <img src="arquivos/<?= $foto['file_name'] ?>" class="card-img-top">
+                            <?php else: ?>
+                                <img src="arquivos/image.gif" class="card-img-top">
+                            <?php endif; ?>
+                        </div>
+
                         <?php endforeach;?>
                         <?php
                             } else {echo("Usuário não encontrado");}

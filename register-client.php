@@ -10,6 +10,9 @@
     <title>Registrar Usuário</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   </head>
+  <?php
+    include("navbar.php")
+  ?>
   <body>
     <div class="container mt-5">
         <div class="row">
@@ -21,7 +24,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="process-client.php" method="POST">
+                        <form action="process-client.php" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="fw-bold">Nome</label>
                                 <input type="text" name="nome" class="form-control border border-success-subtle" placeholder="joão da silva">
@@ -33,6 +36,10 @@
                             <div class="mb-3">
                                 <label class="fw-bold">Data de Nascimento</label>
                                 <input type="date" name="data_nascimento" class="form-control border border-success-subtle">
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Fotos</label>
+                                <input type="file" name="fotos" class="form-control border border-success-subtle" accept=".jpg,.jpeg,.png">
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">Senha</label>

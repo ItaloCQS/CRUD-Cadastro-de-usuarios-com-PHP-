@@ -53,7 +53,8 @@
                                         <a href="client-view.php?id=<?= $usuario['id'] ?>" class="btn btn-sm btn-secondary">Visualizar</a>
                                         <a href="edit-client.php?id=<?= $usuario['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
                                         <form action="process-client.php" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este usuário? Esta ação não poderá ser desfeita.');">
-                                            <button type="submit" name="delete-client-btn" class="btn btn-sm btn-danger" value="<?= $usuario['id'] ?>">Excluir</button>
+                                            <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
+                                            <button type="submit" name="delete-client-btn" class="btn btn-sm btn-danger">Excluir</button>
                                         </form>
                                     </td>
                                 </tr>
