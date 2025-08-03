@@ -54,7 +54,7 @@
                         </div>
                         <div class="input-group">
                             <p class="input-group-text fw-bold">Data de Nascimento</p>
-                            <p class="form-control"><?= $usuario['data_nascimento'] ?></p>
+                            <p class="form-control"><?= date("d/m/Y",strtotime(($usuario['data_nascimento']))) ?></p>
                         </div>
 
                         <div class="card mx-auto" style="width: 18rem;">

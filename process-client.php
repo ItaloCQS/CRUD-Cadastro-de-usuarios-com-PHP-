@@ -52,6 +52,35 @@
         }
 
         if(mysqli_query($conn, $sql)){
+            if($_FILES['foto'] && $_FILES['foto']['error'] == 0){
+                $foto = $_FILES['foto'];
+                $nomeArquivo = time() . "_" . basename($foto['name']);
+                $caminhoDestino = "arquivos/" . $nomeArquivo;
+
+                $sqlBuscaFoto = "SELECT file_name FROM files WHERE usuario = '$id'";
+                $resultadoFoto = mysqli_query($conn, $sqlBuscaFoto);
+            
+                if ($resultadoFoto && mysqli_num_rows($resultadoFoto) > 0) {
+                    $fotoAntiga = mysqli_fetch_assoc($resultadoFoto);
+            
+                    $caminhoFotoAntiga = 'arquivos/' . $fotoAntiga['file_name'];
+            
+                    if (file_exists($caminhoFotoAntiga)) {
+                        unlink($caminhoFotoAntiga);
+                    }
+            
+                    $sqlDeleteFoto = "DELETE FROM files WHERE usuario = '$id'";
+                    mysqli_query($conn, $sqlDeleteFoto);
+                }
+
+                if(move_uploaded_file($foto['tmp_name'] ,$caminhoDestino)){
+                    $nomeArquivoDB = mysqli_real_escape_string($conn, $nomeArquivo);
+                    $sqlFoto = "INSERT INTO files (file_name, usuario) VALUES ('$nomeArquivoDB',$id)";
+                    mysqli_query($conn, $sqlFoto);
+                } else {
+                    echo("Ocorreu um erro na inserção da foto");
+                };
+            }
             $_SESSION['mensagem'] = "O Usuário foi Editado com Sucesso";
             $_SESSION['bg'] = "success";
             header("location: index.php");
